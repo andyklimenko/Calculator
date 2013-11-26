@@ -3,7 +3,7 @@ class IBinaryOperation
 {
 public:
 	IBinaryOperation(void);
-	~IBinaryOperation(void);
+	~IBinaryOperation(void); // should be virtual
 
 	virtual double Calculate(double a, double b) = 0;
 };
