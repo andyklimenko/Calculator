@@ -92,7 +92,7 @@ void parse(std::string& str)
 
 int main()
 {
-	std::string s = " sqrt( 9 , 4 )";
+	std::string s = " pow( 9 , 4 )";
 	std::cout << s << std::endl;
 	parse(std::string(s));
 	

@@ -82,7 +82,8 @@ Pow::~Pow(void)
 {
 }
 
-double powRecurs(double a, double b) // should be private member
+double Pow::powRecurs(double a, double b) // should be private member
+// I don't know what i must do with it
 {
 	if(b==0) 
 	{
@@ -90,7 +91,7 @@ double powRecurs(double a, double b) // should be private member
 	}
 	else
 	{
-		return powRecurs(a,b-1)*a;
+		return Pow::powRecurs(a,b-1)*a;
 	}
 }
 
@@ -98,7 +99,7 @@ double Pow::Calculate(double a, double b)
 {
 	if(b>=1)
 	{
-		return powRecurs(a,b);
+		return Pow::powRecurs(a,b);
 	}
 }
 
@@ -116,8 +117,8 @@ double sqrtRecurs(double a, double b)
 {
 	double x = 1;
     for (int i = 0; i < 1000; i++)
-        while (x != (x = 1.0 / b * (((b - 1) * x) + (a / powRecurs(x, b - 1)))))
-			{} /// ???
+		while (x != (x = 1.0 / b * (((b - 1) * x) + (a / Pow::powRecurs(x, b - 1)))))
+			{continue;} /// ???
     return x;
 }
 
@@ -127,7 +128,7 @@ double Sqrt::Calculate(double a, double b)
 	{
 		return sqrtRecurs(a,b);
 	}
-	//method doesn't return anything in this case.
+	return 0;
 }
 
 IBinaryOperation* createBinaryOperation(std::string op)
