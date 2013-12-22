@@ -47,11 +47,12 @@ public:
 	virtual ~Pow();
 	virtual double Calculate(double a, double b);
 	
-private:
+protected:
 	double powRecurs(double a, double b);
+	double sqrtRecurs(double a, double degree, double xk, double accuracy);
 };
 
-class Sqrt: public IBinaryOperation
+class Sqrt: public Pow
 {
 public:
 	Sqrt();
@@ -60,4 +61,4 @@ public:
 };
 
 
-IBinaryOperation* createBinaryOperation(std::string op);
+IBinaryOperation* createBinaryOperation(const std::string& op);

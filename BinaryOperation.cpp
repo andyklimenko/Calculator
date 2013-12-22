@@ -113,27 +113,30 @@ Sqrt::~Sqrt(void)
 {
 }
 
-double sqrtRecurs(double a, double b)
+double Pow::sqrtRecurs(double a, double degree, double xk, double accuracy)
 {
-	double x = 1;
-    for (int i = 0; i < 1000; i++)
-		while (x != (x = 1.0 / b * (((b - 1) * x) + (a / Pow::powRecurs(x, b - 1)))))
-			{continue;} /// ???
-    return x;
+	double xIncremented = 1.0 / degree * (((degree - 1) * xk) + (a / powRecurs(xk, degree - 1)));
+    double res = xIncremented;
+	if(fabs(xIncremented - xk) > accuracy)
+	{
+		res = sqrtRecurs(a, degree, xIncremented, accuracy);
+    }
+    return res;
 }
 
 double Sqrt::Calculate(double a, double b)
 {
 	if(b>=1)
 	{
-		return sqrtRecurs(a,b);
+		double x0 = 1;
+		double accuracy = 0.001;
+		return sqrtRecurs(a, b, x0, accuracy);
 	}
 	return 0;
 }
 
-IBinaryOperation* createBinaryOperation(std::string op)
+IBinaryOperation* createBinaryOperation(const std::string& op)
 {
-	
 	IBinaryOperation* res = NULL;
 	if (op == "+")
 	{

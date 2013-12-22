@@ -1,13 +1,26 @@
 // 12345.cpp : Defines the entry point for the console application.
 //
-
-
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <cctype>
 #include <math.h>
+#include <stdexcept>
 #include "BinaryOperation.h"
+
+template<typename T>
+T StringToNumber(const std::string& numberAsString)
+{
+	T valor;
+
+	std::stringstream stream(numberAsString);
+	stream >> valor;
+	if (stream.fail())
+	{
+		throw std::runtime_error(numberAsString);
+	}
+	return valor;
+}
 
 void parse(std::string& str)
 {
@@ -51,9 +64,6 @@ void parse(std::string& str)
 			
 
 		}
-	
-		
-				
 		//op = createBinaryOperation(sqrOp);
 	}
 
@@ -62,12 +72,11 @@ void parse(std::string& str)
 		return;
 	}
 
-	double num1 = atof(numStr1.c_str());
+	double num1 = StringToNumber<double>(numStr1);
 	std::string numStr2;	
-	int lastPosNum2=0;
+	//int lastPosNum2=0;
 	for(size_t j=lastPosNum1+1; j<str.size(); ++j)
 	{
-
 		if(str[j] != ' ' && str[j] != ')')
 		{
 			if (isdigit(str[j]) || str[j]=='.')
@@ -81,20 +90,17 @@ void parse(std::string& str)
 		}
 	}
 
-	double num2 = atof(numStr2.c_str());
-	double res;
-	
-	res = op->Calculate(num1, num2);
+	double num2 = StringToNumber<double>(numStr2);
+	double res = op->Calculate(num1, num2);
 
 	std::cout << "Res : " << res << std::endl;
-	
 }
 
 int main()
 {
-	std::string s = " pow( 9 , 4 )";
+	std::string s = " sqrt( 9 , 4 )";
 	std::cout << s << std::endl;
-	parse(std::string(s));
+	parse(s);
 	
 	//return 0;
 }
