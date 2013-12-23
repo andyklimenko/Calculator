@@ -6,6 +6,7 @@
 #include <cctype>
 #include <math.h>
 #include <stdexcept>
+#include <auto_ptr.h>
 #include "BinaryOperation.h"
 
 template<typename T>
@@ -24,7 +25,7 @@ T StringToNumber(const std::string& numberAsString)
 
 void parse(std::string& str)
 {
-	IBinaryOperation *op = NULL;
+	std::auto_ptr<IBinaryOperation> op;
 	std::string numStr1;	
 	int lastPosNum1=0;
 	std::string binOp;
@@ -47,7 +48,7 @@ void parse(std::string& str)
 				
 				else if(str[i]==',')
 				{
-					op = createBinaryOperation(binOp);
+					op.reset(createBinaryOperation(binOp));
 					break;
 				}
 				else if(str[i]=='(')
@@ -55,10 +56,10 @@ void parse(std::string& str)
 					
 				}
 			}
-			else if (NULL == op)
+			else if (NULL == op.get())
 			{
 				binOp += str[i];
-				op = createBinaryOperation(binOp);
+				op.reset(createBinaryOperation(binOp));
 				break;
 			}
 			
@@ -67,7 +68,7 @@ void parse(std::string& str)
 		//op = createBinaryOperation(sqrOp);
 	}
 
-	if (!op)
+	if (!op.get())
 	{
 		return;
 	}
